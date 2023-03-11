@@ -55,3 +55,14 @@ function! chatgpt#ask(question)
     call cursor(line('$'), 0)
     call win_gotoid(src_winnr)
 endfunction
+
+
+function! join_selected_lines()
+    let [start_row, start_col] = getpos("'<")[1:2]
+    let [end_row, end_col] = getpos("'>")[1:2]
+    let range = [start_row, end_row]
+
+    let lines = getline(range[0], range[1])
+    let text = join(lines, "\n")
+    return  text
+endfunction
