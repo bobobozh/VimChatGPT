@@ -25,6 +25,13 @@ To open the chat window, type the following command in Vim:
 
 This will send your question to ChatGPT, and open a split window to show ChatGPT response.
 
+To get help information of this plugin, type the following command in
+Vim:
+
+```
+:help Ai
+```
+
 ## Configuration
 
 The following configuration options are available:
