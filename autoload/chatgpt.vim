@@ -3,7 +3,7 @@ function! ChatGPT_API_Call(input)
     let l:url = "https://api.openai.com/v1/chat/completions"
     let l:prompt = a:input
 
-    let l:payload = '{"temperature": 0.7, "top_p":1,"frequency_penalty": 0.5,"presence_penalty": 0.0 , "max_tokens": 1024, "model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": "' . l:prompt . '"}]}'
+    let l:payload = '{"temperature": 0.7, "top_p":1,"frequency_penalty": 0.5,"presence_penalty": 0.0 , "max_tokens": 1024, "model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": "' . shellescape(l:prompt) . '"}]}'
     let l:headers = {"Content-Type": "application/json", "Authorization": "Bearer " . l:api_key}
 
     let response = system('curl --connect-timeout 10 -m 20 -s -H "Content-Type: application/json" -H "Authorization: Bearer ' . l:api_key . '" -d ' . shellescape(l:payload) . ' ' . l:url)
@@ -25,6 +25,20 @@ function! ChatGPT_API_Call(input)
 endfunction
 
 
+function! ChatGPT_API_Call_And_Show(question)
+    let response = ChatGPT_API_Call(a:question)
+    let respl = split(response, '\n')
+
+    call append(line('$'), "ChatGPT: ============================")
+    "call append(line('$'), "ChatGPT: ". response)
+    for rp in respl
+        call append(line('$'), rp)
+    endfor
+    call append(line('$'), "=====================================")
+    call cursor(line('$'), 0)
+endfunction
+
+
 function! chatgpt#ask(question)
     let src_winnr = win_getid()
     let split_name="ChatGPTOutput"
@@ -43,26 +57,25 @@ function! chatgpt#ask(question)
     call append(line('$'), "Me: " . a:question)
     call cursor(line('$'), 0)
 
-    let response = ChatGPT_API_Call(a:question)
-    let respl = split(response, '\n')
-
-    call append(line('$'), "ChatGPT: ============================")
-    "call append(line('$'), "ChatGPT: ". response)
-    for rp in respl
-        call append(line('$'), rp)
-    endfor
-    call append(line('$'), "=====================================")
-    call cursor(line('$'), 0)
+    let ret = ChatGPT_API_Call_And_Show(a:question)
     call win_gotoid(src_winnr)
 endfunction
 
 
-function! join_selected_lines()
+function! Join_selected_lines()
     let [start_row, start_col] = getpos("'<")[1:2]
     let [end_row, end_col] = getpos("'>")[1:2]
     let range = [start_row, end_row]
 
     let lines = getline(range[0], range[1])
-    let text = join(lines, "\n")
-    return  text
+    let text = join(lines, '\n')
+    return text
+endfunction
+
+
+function! chatgpt#review() range
+    let codes = Join_selected_lines()
+    let question = "review this code and improve it: \\n" . codes
+    let question = substitute(question, "\"", "\\\\\"", "g")
+    call chatgpt#ask(question)
 endfunction
