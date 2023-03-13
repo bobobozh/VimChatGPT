@@ -6,7 +6,7 @@ function! ChatGPT_API_Call(input)
     let l:payload = '{"temperature": 0.7, "top_p":1,"frequency_penalty": 0.5,"presence_penalty": 0.0 , "max_tokens": 1024, "model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": "' . l:prompt . '"}]}'
     let l:headers = {"Content-Type": "application/json", "Authorization": "Bearer " . l:api_key}
 
-    let response = system('curl --connect-timeout 10 -m 20 -s -H "Content-Type: application/json" -H "Authorization: Bearer ' . l:api_key . '" -d ' . shellescape(l:payload) . ' ' . l:url)
+    let response = system('curl --connect-timeout 10 -m 60 -s -H "Content-Type: application/json" -H "Authorization: Bearer ' . l:api_key . '" -d ' . shellescape(l:payload) . ' ' . l:url)
 
     if v:shell_error
         return "Error"
