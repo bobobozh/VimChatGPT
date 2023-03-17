@@ -72,6 +72,7 @@ function! Join_selected_lines()
     return text
 endfunction
 
+
 function! Quick(quick_question)
     let codes = Join_selected_lines()
 
@@ -80,6 +81,7 @@ function! Quick(quick_question)
 
     call chatgpt#ask(question)
 endfunction
+
 
 function! chatgpt#review() range
     let quick_question = "review this code and improve it"
