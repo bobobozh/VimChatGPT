@@ -29,8 +29,6 @@ function! ChatGPT_API_Call_And_Show(question)
     let response = ChatGPT_API_Call(a:question)
     let respl = split(response, '\n')
 
-    call append(line('$'), "ChatGPT: ============================")
-    "call append(line('$'), "ChatGPT: ". response)
     for rp in respl
         call append(line('$'), rp)
     endfor
@@ -55,7 +53,9 @@ function! chatgpt#ask(question)
 
     call append(line('$'), "")
     call append(line('$'), "Me: " . a:question)
+    call append(line('$'), "ChatGPT: ============================")
     call cursor(line('$'), 0)
+    redraw
 
     let ret = ChatGPT_API_Call_And_Show(a:question)
     call win_gotoid(src_winnr)
