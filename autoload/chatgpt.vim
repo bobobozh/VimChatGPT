@@ -25,6 +25,25 @@ function! ChatGPT_API_Call(input)
 endfunction
 
 
+function! ChatGPT_Type(prompt)
+    let response = systemlist('python3 -c "import openai; import os; openai.api_key = os.environ[\"OPENAI_API_KEY\"]; print(openai.Completion.create(engine=\"text-davinci-003\", prompt=' . shellescape(a:prompt) . ', max_tokens=1, n=1, stop=None, temperature=0.5, stream=True))"')
+
+    echo response
+    call cursor(line('$'), 0)
+    " Process the response one token at a time
+    let message = ''
+    for chunk in response
+        let message .= chunk
+        echo message
+        if chunk == "\n"
+            call append(line('$'), message[:-2])
+            redraw
+            let message = ''
+        endif
+    endfor
+endfunction
+
+
 function! ChatGPT_API_Call_And_Show(question)
     let response = ChatGPT_API_Call(a:question)
     let respl = split(response, '\n')
@@ -58,6 +77,7 @@ function! chatgpt#ask(question)
     redraw
 
     let ret = ChatGPT_API_Call_And_Show(a:question)
+    "let ret = ChatGPT_Type(a:question)
     call win_gotoid(src_winnr)
 endfunction
 
@@ -73,12 +93,37 @@ function! Join_selected_lines()
 endfunction
 
 
+function! Join_question_lines(question)
+    let parts = split(a:question, '::')
+    let title = parts[0]
+    let start_line = parts[1]
+    let end_line = parts[2]
+
+
+    let content = ""
+    for line_num in range(start_line, end_line)
+      let line_content = getline(line_num)
+      let content = content . '\n' . line_content
+    endfor
+
+    let ask_question = title . '\n' . content
+    return ask_question
+endfunction
+
+
 function! Quick(quick_question)
     let codes = Join_selected_lines()
 
     let question = a:quick_question . " : " . codes
     let question = escape(question, '\"')
 
+    call chatgpt#ask(question)
+endfunction
+
+
+function! chatgpt#lines(question) range
+    let question = Join_question_lines(a:question)
+    let question = escape(question, '\"')
     call chatgpt#ask(question)
 endfunction
 
