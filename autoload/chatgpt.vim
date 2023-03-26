@@ -29,10 +29,11 @@ function! ChatGPT_API_Call_And_Show(question)
     let response = ChatGPT_API_Call(a:question)
     let respl = split(response, '\n')
 
+    call append(line('$'), "-----------------------------------------------")
     for rp in respl
         call append(line('$'), rp)
     endfor
-    call append(line('$'), "=====================================")
+    call append(line('$'), "-----------------------------------------------")
     call cursor(line('$'), 0)
 endfunction
 
@@ -51,9 +52,10 @@ function! chatgpt#ask(question)
 
     call win_gotoid(g:chatgpt_win)
 
+    let now = strftime("%H:%M:%S")
     call append(line('$'), "")
-    call append(line('$'), "Me: " . a:question)
-    call append(line('$'), "ChatGPT: ============================")
+    call append(line('$'), now . " Me: " . a:question)
+    call append(line('$'), "ChatGPT ...")
     call cursor(line('$'), 0)
     redraw
 
