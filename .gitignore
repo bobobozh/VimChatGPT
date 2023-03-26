@@ -128,5 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-*.sw[pow]
+*.sw[pon]
 *.md.html
