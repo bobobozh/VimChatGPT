@@ -35,7 +35,7 @@ function! Chat(question, show_mode='full')
 endfunction
 
 
-function! chat#on(split_name, question)
+function! wchat#on(split_name, question)
     if a:split_name == 'current'
         let ret = Chat(a:question, 'answer')
     else

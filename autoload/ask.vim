@@ -17,7 +17,7 @@ function! Select_And_Ask(question, split_name=g:AI_OUTPUT_SPLIT)
     let question = a:question . " : " . codes
     let question = escape(question, '\"')
 
-    call chat#on(a:split_name, question)
+    call wchat#on(a:split_name, question)
 endfunction
 
 
@@ -60,17 +60,11 @@ endfunction
 function! ask#withlines(question) range
     let question = Join_question_lines(a:question)
     let question = escape(question, '\"')
-    call chat#on(g:AI_OUTPUT_SPLIT, question)
+    call wchat#on(g:AI_OUTPUT_SPLIT, question)
 endfunction
 
 
 function! ask#ask(question)
-    call chat#on(g:AI_OUTPUT_SPLIT, a:question)
+    call wchat#on(g:AI_OUTPUT_SPLIT, a:question)
 endfunction
 
-
-function! ask#code() range
-    let file_extension = expand('%:e')
-    let question = "write " . file_extension . " code base on these comments:"
-    call Select_And_Ask(question, 'current')
-endfunction
