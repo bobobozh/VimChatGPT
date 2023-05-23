@@ -1,3 +1,5 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " mode1: Talk Mode
 "   Open a split window(AIOUTPUT) to talk to AI(ChatGPT)
 "
@@ -18,13 +20,16 @@ command! -nargs=+ Aiwith call ask#withlines(<q-args>)
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 " mode2: Cowrite Mode
 "   Write answer into the file
-"   at the bottom of the file by default.
 "
-"
-command -range=% Awcode call aiwrite#code()
+" Write module code base selected docstring comment
+command -range=% Awmodule call aiwrite#module()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 " mode3: Pair Mode
