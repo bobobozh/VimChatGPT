@@ -9,13 +9,15 @@ command! -nargs=+ Ai call ask#ask(<q-args>)
 
 " Base on selected lines
 command -range=% Aireview call ask#review()
-command -range=% Aicomment call ask#comment()
+" command -range=% Aicomment call ask#comment()
 command -range=% Aitest call ask#tests()
 
 " Base on line range paramters, splite with `::`
 " For example
 "   :Ain correct codes with::1::20
 command! -nargs=+ Aiwith call ask#withlines(<q-args>)
+
+" command! -nargs=+ Aireadme call ask#readme(<q-args>)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -25,6 +27,10 @@ command! -nargs=+ Aiwith call ask#withlines(<q-args>)
 "
 " Write module code base selected docstring comment
 command -range=% Awmodule call aiwrite#module()
+
+" command -range=% Awcomment call aiwrite#comment()
+" command -range=% Awfunc call aiwrite#func()
+" command -range=% Awcode call aiwrite#code()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
