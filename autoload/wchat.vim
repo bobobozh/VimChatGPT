@@ -19,16 +19,17 @@ function! Chat(question, show_mode='full')
         let respl = split(response, '\n')
 
         call append(line('$'), '')
-        call append(line('$'), '-----------------------------------------------')
+        call append(line('$'), '********************')
         call append(line('$'), '')
         for rp in respl
             call append(line('$'), rp)
         endfor
         call append(line('$'), '')
-        call append(line('$'), "-----------------------------------------------")
+        call append(line('$'), '********************')
         call append(line('$'), '')
         call cursor(line('$'), 0)
         redraw
+        write
     else
         let response = openai#ask(a:question)
         let respl = split(response, '\n')
@@ -48,7 +49,7 @@ function! wchat#on(split_name, question)
         let chat_win_id = bufwinnr(a:split_name)
         if chat_win_id == -1
             execute "vert rightbelow new " . a:split_name
-            vertical resize 100
+            vertical resize 80%
             call append(0, "ChatGPT")
             call append(1, "=======")
             let g:chat_win_id = win_getid()

@@ -11,7 +11,7 @@ function! Join_selected_lines()
 endfunction
 
 
-function! Select_And_Ask(question, split_name=g:AI_OUTPUT_SPLIT)
+function! Select_and_Ask(question, split_name=g:AI_OUTPUT_SPLIT)
     let codes = Join_selected_lines()
 
     let question = a:question . " : " . codes
@@ -23,19 +23,19 @@ endfunction
 
 function! ask#review() range
     let question = "review this code and improve it"
-    call Select_And_Ask(question)
+    call Select_and_Ask(question)
 endfunction
 
 
 function! ask#comment() range
     let question = "add doc comment for these function"
-    call Select_And_Ask(question)
+    call Select_and_Ask(question)
 endfunction
 
 
 function! ask#tests() range
     let question = "generate unit tests with unittest lib for these function"
-    call Select_And_Ask(question)
+    call Select_and_Ask(question)
 endfunction
 
 
