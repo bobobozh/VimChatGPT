@@ -1,24 +1,41 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" mode1: Talk Mode
+"   Open a split window(AIOUTPUT) to talk to AI(ChatGPT)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:AI_OUTPUT_SPLIT = 'AIOUTPUT'
+
 " Send a question to ChatGPT
-command! -nargs=+ Ai call chatgpt#ask(<q-args>)
+command! -nargs=+ Ai call ask#ask(<q-args>)
+
+" 
+" command! -nargs=+ Aireadme call ask#readme(<q-args>)
 
 " Base on selected lines
-command -range=% Aqr call chatgpt#review()
-command -range=% Aqc call chatgpt#comment()
-command -range=% Aqt call chatgpt#tests()
+command -range=% Aireview call ask#review()
 
-" Base on line range paramters
-command! -nargs=+ Ail call chatgpt#lines(<q-args>)
+" command -range=% Aicomment call ask#comment()
+command -range=% Aitest call ask#tests()
+
+" Base on line range paramters, splite with `::`
+" For example
+"   :Ain correct codes with::1::20
+command! -nargs=+ Aiwith call ask#withlines(<q-args>)
 
 
-" Help to put the answer into practice
-command! -nargs=+ Sh call Ex_line(<q-args>)
-function! Ex_line(line_num)
-    let line_content = getline(a:line_num)
-    let output = system(line_content)
-    echo output
-endfunction
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" mode2: Cowrite Mode
+"   Write answer into the file
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-command! -nargs=+ Wt call Write_to(<q-args>)
-function! Write_to(path)
-    echo 'TODO'
-endfunction
+" Write module code base selected docstring comment
+command -range=% Awmodule call aiwrite#module()
+
+" command -range=% Awcomment call aiwrite#comment()
+" command -range=% Awfunc call aiwrite#func()
+" command -range=% Awcode call aiwrite#code()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: mode3: Pair Mode
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
