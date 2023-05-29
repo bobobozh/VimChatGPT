@@ -1,8 +1,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " mode1: Talk Mode
-"   Open a split window(AI.CHAT) to talk to AI(ChatGPT)
+"   Open a split window(AI.chat) to talk to AI(ChatGPT)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:AI_OUTPUT_SPLIT = 'AI.CHAT'
+let g:AI_OUTPUT_SPLIT = 'AI.chat'
 
 " Send a question to ChatGPT
 command -nargs=+ Ai call ask#ask(<q-args>)
