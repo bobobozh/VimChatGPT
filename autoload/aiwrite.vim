@@ -1,5 +1,6 @@
 function! aiwrite#comment() range
-    let question = "add doc comment for these function"
+    let file_extension = expand('%:e')
+    let question = "add " . file_extension . " doc comment for: "
     let question = ask_with#selected(question)
     call wchat#on('current', question)
 endfunction

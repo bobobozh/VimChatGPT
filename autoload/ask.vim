@@ -17,8 +17,8 @@ function! ask#tests() range
 endfunction
 
 
-function! ask#withlines(question) range
-    let question = ask_with#lines(a:question)
+function! ask#withlines(line1, line2, question)
+    let question = ask_with#lines(a:question, a:line1, a:line2)
     let question = escape(question, '\"')
     call wchat#on(g:AI_OUTPUT_SPLIT, question)
 endfunction

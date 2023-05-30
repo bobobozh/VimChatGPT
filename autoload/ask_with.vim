@@ -26,19 +26,13 @@ function! Join_selected_lines()
 endfunction
 
 
-function! ask_with#lines(question)
-    let parts = split(a:question, '::')
-    let title = parts[0]
-    let start_line = parts[1]
-    let end_line = parts[2]
-
-
+function! ask_with#lines(question, start_line, end_line)
     let content = ""
-    for line_num in range(start_line, end_line)
+    for line_num in range(a:start_line, a:end_line)
       let line_content = getline(line_num)
       let content = content . '\n' . line_content
     endfor
 
-    let ask_question = title . '\n' . content
+    let ask_question = a:question . '\n' . content
     return ask_question
 endfunction

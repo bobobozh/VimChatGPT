@@ -19,71 +19,41 @@ Plug 'bobobocode/vimchatgpt'
 
 ## Usage
 
-### Asking a Question
+## Talk Mode
 
-To open the chat window, type the following command in Vim:
+In Talk mode, users can engage in a conversation with AI (ChatGPT), 
+through a split window interface.
 
-```
-:Ai <your question>
-```
+Use these commands below to send questions:
 
-This will send your question to ChatGPT, and open a split window to show ChatGPT response.
+- Send a question to ChatGPT
+  - Command: `:Ai <question>`
+- Review the selected lines
+  - Command: `:% Aireview`
+- Create unit test for the selected functions
+  - Command: `:% Aitest`
+- Use line number address to ask
+  - Command: `:<line1>,<line2> Aiwith <question>`
+- Ask solution with the opend README file
+  - Command: `:Aireadme`
 
-For example:
+## Cowrite Mode
 
-```
-:Ai What is the capital of France?
-```
+Cowrite Mode is a powerful tool for helping developers write better code by providing assistance with comments, functions, and code snippets. 
 
-### Reviewing Selected Lines
+The answer of AI chatbot will be shown in your editing file. So you
+can cowrite the file together.
 
-To review selected lines of code, use the following command:
+- Write comment for the selected code
+  - Command: `:% Awcomment`
+- Write function for the selected comment
+  - Command: `:% Awfunc`
+- Write code for the selected content
+  - Command: `:% Awcode`
+- Write module code base selected docstring comment
+  - Command: `:% Awmodule`
 
-```
-:'<,'>Air
-```
-
-This will send the selected lines as input to ChatGPT for review.
-
-### Commenting on Selected Lines
-
-To add comments on selected lines of code, use the following command:
-
-```vim
-:'<,'>Aim
-```
-
-This will send the selected lines as input to ChatGPT for commenting.
-
-### Testing Selected Lines
-
-To generate test cases for selected lines of code, use the following command:
-
-```
-:'<,'>Ait
-```
-
-This will send the selected lines as input to ChatGPT for generating test cases.
-
-### Ask with Line Numbers
-
-To ask question about content within line number range, use this command:
-
-```
-:Ain <question>::<start_line>::<end_line>
-```
-
-For example:
-
-```
-:Ain fix bugs about::1::30
-```
-
-### Ask to write code base on selected comments
-
-```
-:'<,'>Aicode
-```
+## Pair Mode (TODO)
 
 ### Help
 
@@ -105,7 +75,7 @@ To change the configuration options, add the following lines to your vimrc file:
 let g:chatgpt_api_key = "<YOUR_API_KEY>"
 ```
 
-You can set the `g:AI_OUTPUT_SPLIT` variable to specify a custom delimiter for splitting the output of the AI commands. By default, it is set to `'AIOUTPUT'`.
+You can set the `g:AI_OUTPUT_SPLIT` variable to specify a custom delimiter for splitting the output of the AI commands. By default, it is set to `'AI.chat'`.
 
 ```
 let g:AI_OUTPUT_SPLIT = "<CUSTOM_AI_CHAT_SPLIT_NAME>"
